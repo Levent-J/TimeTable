@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+//apply plugin: 'com.antfortune.freeline'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+
+    defaultConfig {
+        applicationId "com.levent_j.timetable"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:design:25.0.0'
+
+    compile 'com.android.support:recyclerview-v7:25.0.0'//recyclerview
+    compile 'com.android.support:cardview-v7:25.0.0'//cardview
+
+    compile 'io.reactivex:rxandroid:1.1.0'// RxAndroid
+    compile 'io.reactivex:rxjava:1.1.0'// 推荐同时加载RxJava
+
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'// Retrofit网络处理
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'// Retrofit的rx解析库
+
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'// Retrofit的gson库
+    compile 'com.squareup.okhttp3:okhttp:3.1.2'//ok http
+    compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
+    compile 'com.google.code.gson:gson:2.6.2'
+
+    compile 'com.github.bumptech.glide:glide:3.7.0'//图片处理
+
+    compile 'org.greenrobot:eventbus:3.0.0'//事件分发
+    compile 'com.jakewharton:butterknife:7.0.1'//依赖注入
+}

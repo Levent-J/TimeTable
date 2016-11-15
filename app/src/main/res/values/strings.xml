@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Low级课程表</string>
+    <string name="app_version">v 0.01</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">切换账号</string>
+</resources>
