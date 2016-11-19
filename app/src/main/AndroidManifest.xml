@@ -32,6 +32,9 @@
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
+
+        <activity android:name=".activity.CourseDetailActivity"/>
+        <activity android:name=".activity.CourseSelectActivity"/>
     </application>
 
 </manifest>
