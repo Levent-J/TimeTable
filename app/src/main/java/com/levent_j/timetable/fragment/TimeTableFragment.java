@@ -43,7 +43,7 @@ public class TimeTableFragment extends BaseFragment{
 
         Api.getINSTANCE()
                 .getTimeTable("1")
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<TableCourse>>() {
                     @Override

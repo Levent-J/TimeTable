@@ -31,12 +31,12 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.1.0'// RxAndroid
     compile 'io.reactivex:rxjava:1.1.0'// 推荐同时加载RxJava
 
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'// Retrofit网络处理
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'// Retrofit的rx解析库
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'// Retrofit网络处理
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'// Retrofit的rx解析库
 
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'// Retrofit的gson库
-    compile 'com.squareup.okhttp3:okhttp:3.1.2'//ok http
-    compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'// Retrofit的gson库
+    compile 'com.squareup.okhttp3:okhttp:3.3.1'//ok http
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     compile 'com.google.code.gson:gson:2.6.2'
 
     compile 'com.github.bumptech.glide:glide:3.7.0'//图片处理

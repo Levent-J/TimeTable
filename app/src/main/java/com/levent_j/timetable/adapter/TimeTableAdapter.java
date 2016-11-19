@@ -1,10 +1,12 @@
 package com.levent_j.timetable.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.levent_j.timetable.R;
@@ -24,6 +26,11 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
 
     private Context mContext;
     private List<TableCourse> mTableCourses;
+    private int[] colors = new int[]{R.color.colorSecondaryText,
+            R.color.colorItemYellow,R.color.colorItemBlue,R.color.colorItemPink,
+            R.color.colorItemCyn,R.color.colorItemPurple,R.color.colorItemOrange,
+            R.color.colorAccent,R.color.colorItemPink,R.color.colorItemYellow,
+            R.color.colorItemOrange,R.color.colorItemPurple,R.color.colorItemGreen};
 
     public TimeTableAdapter(Context context){
         mContext = context;
@@ -54,6 +61,8 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
     class mViewHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.txt)
         TextView textView;
+        @Bind(R.id.item_background)
+        RelativeLayout backgorund;
 
         public mViewHolder(View itemView) {
             super(itemView);
@@ -61,44 +70,39 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
         }
 
         public void bindViews(int position){
+
             if (position%8==0){
+                //时间
                 textView.setText("第"+(position%7+(position<50?1:8))+"节课");
+                textView.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryText));
+                backgorund.setBackground(mContext.getResources().getDrawable(colors[0]));
             }else {
-//                int index=0;
-//                if (position<8){
-//                    index=1;
-//                }else if (position<16){
-//                    index=2;
-//                }else if (position<24){
-//                    index=3;
-//                }else if (position<32){
-//                    index=4;
-//                }else if (position<40){
-//                    index=5;
-//                }else if (position<48){
-//                    index=6;
-//                }else if (position<56){
-//                    index=7;
-//                }else if (position<64){
-//                    index=8;
-//                }else if (position<72){
-//                    index=9;
-//                }else if (position<80){
-//                    index=10;
-//                }else if (position<88){
-//                    index=11;
-//                }else {
-//                    index=12;
-//                }
                 int index = position/8+1;
                 TableCourse tableCourse = mTableCourses.get(position-index);
+
                 if (tableCourse.status==1){
+                    //有课
+                    textView.setTextColor(mContext.getResources().getColor(R.color.colorWhiteText));
+                    backgorund.setBackground(mContext.getResources().getDrawable(colors[tableCourse.cid]));
                     textView.setText("课程："+tableCourse.cname);
                 }else {
-                    textView.setText("课程："+position);
+                    //无课
+                    textView.setTextColor(mContext.getResources().getColor(R.color.colorWhiteText));
+                    backgorund.setBackground(mContext.getResources().getDrawable(colors[0]));
+                    textView.setText("今日无课");
                 }
             }
 
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

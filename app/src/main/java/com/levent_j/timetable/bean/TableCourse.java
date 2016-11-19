@@ -2,6 +2,7 @@ package com.levent_j.timetable.bean;
 
 /**
  * Created by levent_j on 16-11-17.
+ * used :课程表界面
  */
 public class TableCourse {
     public int tid;     //课程编号
