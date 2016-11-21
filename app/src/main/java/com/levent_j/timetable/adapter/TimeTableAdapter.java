@@ -1,8 +1,10 @@
 package com.levent_j.timetable.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,12 @@ import android.widget.Toast;
 
 import com.levent_j.timetable.R;
 import com.levent_j.timetable.activity.CourseDetailActivity;
+import com.levent_j.timetable.activity.CourseSelectActivity;
+import com.levent_j.timetable.activity.MainActivity;
 import com.levent_j.timetable.bean.TableCourse;
+import com.levent_j.timetable.utils.CourseEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -29,11 +36,12 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
 
     private Context mContext;
     private List<TableCourse> mTableCourses;
-    private int[] colors = new int[]{R.color.colorSecondaryText,
+
+    private int[] colors = new int[]{
             R.color.colorItemYellow,R.color.colorItemBlue,R.color.colorItemPink,
             R.color.colorItemCyn,R.color.colorItemPurple,R.color.colorItemOrange,
-            R.color.colorAccent,R.color.colorItemPink,R.color.colorItemYellow,
-            R.color.colorItemOrange,R.color.colorItemPurple,R.color.colorItemGreen};
+            R.color.colorItemLightGreen,R.color.colorItemRed,R.color.colorItemYellow,
+            R.color.colorItemOrange,R.color.colorItemLightPurple,R.color.colorItemGreen};
 
     public TimeTableAdapter(Context context){
         mContext = context;
@@ -57,6 +65,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
     }
 
     public void initData(List<TableCourse> list){
+        mTableCourses.clear();
         mTableCourses.addAll(list);
         notifyDataSetChanged();
     }
@@ -95,14 +104,36 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                     switch (type){
                         case 1:
                             //有课
-                            Intent intentToDetail = new Intent(mContext, CourseDetailActivity.class);
+                            final Intent intentToDetail = new Intent(mContext, CourseDetailActivity.class);
                             mContext.startActivity(intentToDetail);
                             break;
                         case 2:
                             //无课
                             //TODO:弹窗提示：是否加入课程？
-                            Intent intentToSelect = new Intent(mContext, CourseDetailActivity.class);
-                            mContext.startActivity(intentToSelect);
+
+                            AlertDialog alertDialog = new AlertDialog.Builder(mContext)
+                                    .setTitle("提示")
+                                    .setMessage("是否添加新的课程？")
+                                    .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            dialogInterface.dismiss();
+                                        }
+                                    })
+                                    .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            Intent intentToSelect =
+                                                    new Intent(mContext, CourseSelectActivity.class);
+                                            intentToSelect.putExtra(CourseSelectActivity.KET_DATA,String.valueOf(getLayoutPosition()%8));
+                                            intentToSelect.putExtra(CourseSelectActivity.KET_BEGIN,String.valueOf(getLayoutPosition()/8+1));
+                                            intentToSelect.putExtra(CourseSelectActivity.KET_END,String.valueOf(getLayoutPosition()/8+1));
+                                            mContext.startActivity(intentToSelect);
+                                        }
+                                    })
+                                    .setCancelable(true)
+                                    .create();
+                            alertDialog.show();
                             break;
                     }
                 }
@@ -119,7 +150,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                     //时间
                     textView.setText("第"+(position%7+(position<50?1:8))+"节课");
                     textView.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryText));
-                    backgorund.setBackground(mContext.getResources().getDrawable(colors[0]));
+                    backgorund.setBackground(mContext.getResources().getDrawable(R.color.colorSecondaryText));
                     break;
                 case 1:
                     //有课
@@ -127,14 +158,14 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                     TableCourse tableCourse = mTableCourses.get(position-index);
 
                     textView.setTextColor(mContext.getResources().getColor(R.color.colorWhiteText));
-                    backgorund.setBackground(mContext.getResources().getDrawable(colors[tableCourse.cid]));
+                    backgorund.setBackground(mContext.getResources().getDrawable(colors[tableCourse.cid%colors.length]));
                     textView.setText(tableCourse.cname+"@"+tableCourse.classroom);
                     break;
                 case 2:
                     //无课
-                    textView.setTextColor(mContext.getResources().getColor(R.color.colorWhiteText));
-                    backgorund.setBackground(mContext.getResources().getDrawable(colors[0]));
-                    textView.setText(" ");
+                    textView.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryText));
+                    backgorund.setBackground(mContext.getResources().getDrawable(R.color.colorSecondaryText));
+                    textView.setText("pos"+position);
                     break;
             }
 

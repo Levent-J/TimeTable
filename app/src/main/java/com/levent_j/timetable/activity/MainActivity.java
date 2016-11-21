@@ -17,6 +17,8 @@ import com.levent_j.timetable.fragment.AboutFragment;
 import com.levent_j.timetable.fragment.ExamListFragment;
 import com.levent_j.timetable.fragment.TimeTableFragment;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.Bind;
 
 public class MainActivity extends BaseActivity
@@ -33,6 +35,8 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void initialize() {
+
+
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -132,5 +136,10 @@ public class MainActivity extends BaseActivity
                 .commit();
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

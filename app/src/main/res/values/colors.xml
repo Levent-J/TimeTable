@@ -10,10 +10,13 @@
     <color name="colorWhiteText">#ffffff</color>
 
     <color name="colorItemPink">#FF4081</color>
-    <color name="colorItemOrange">#FF5722</color>
+    <color name="colorItemRed">#ed5c5e</color>
+    <color name="colorItemOrange">#ff8a65</color>
     <color name="colorItemYellow">#FFC170</color>
-    <color name="colorItemGreen">#8BC34A</color>
+    <color name="colorItemLightGreen">#8BC34A</color>
+    <color name="colorItemGreen">#50c61d</color>
     <color name="colorItemCyn">#009688</color>
     <color name="colorItemBlue">#00BCD4</color>
-    <color name="colorItemPurple">#673AB7</color>
+    <color name="colorItemPurple">#c66bf4</color>
+    <color name="colorItemLightPurple">#9163da</color>
 </resources>
