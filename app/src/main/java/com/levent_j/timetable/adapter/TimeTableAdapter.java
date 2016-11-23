@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,10 @@ import com.levent_j.timetable.R;
 import com.levent_j.timetable.activity.CourseDetailActivity;
 import com.levent_j.timetable.activity.CourseSelectActivity;
 import com.levent_j.timetable.activity.MainActivity;
+import com.levent_j.timetable.bean.CourseResult;
 import com.levent_j.timetable.bean.TableCourse;
+import com.levent_j.timetable.fragment.TimeTableFragment;
+import com.levent_j.timetable.net.Api;
 import com.levent_j.timetable.utils.CourseEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -28,6 +32,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by levent_j on 16-11-17.
@@ -95,6 +103,61 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
             super(itemView);
             ButterKnife.bind(this,itemView);
 
+            backgorund.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    int type = itemType(getLayoutPosition());
+                    if (type==1){
+                        AlertDialog deleteDialog = new AlertDialog.Builder(mContext)
+                                .setTitle("提示")
+                                .setMessage("是否删除当前课程？")
+                                .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                })
+                                .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        Api.getINSTANCE().deleteCourse(
+                                                "1",
+                                                String.valueOf(getLayoutPosition()%8),
+                                                String.valueOf(getLayoutPosition()/8+1),
+                                                String.valueOf(getLayoutPosition()/8+1))
+                                                .subscribeOn(Schedulers.newThread())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(new Action1<CourseResult>() {
+                                                    @Override
+                                                    public void call(CourseResult courseResult) {
+                                                        if (courseResult!=null){
+                                                            if (courseResult.status=="true"){
+                                                                //成功
+                                                                Log.d("DELETE","pos="+getLayoutPosition());
+                                                                mTableCourses.get(getLayoutPosition()-(getLayoutPosition()/8+1)).status=0;
+                                                                notifyDataSetChanged();
+                                                            }
+                                                        }
+                                                    }
+                                                }, new Action1<Throwable>() {
+                                                    @Override
+                                                    public void call(Throwable throwable) {
+                                                        throwable.printStackTrace();
+                                                    }
+                                                });
+
+                                    }
+                                })
+                                .setCancelable(true)
+                                .create();
+                        deleteDialog.show();
+                        return true;
+                    }else {
+                        return false;
+                    }
+                }
+            });
+
             backgorund.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -104,14 +167,15 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                     switch (type){
                         case 1:
                             //有课
+
+
                             final Intent intentToDetail = new Intent(mContext, CourseDetailActivity.class);
                             mContext.startActivity(intentToDetail);
                             break;
                         case 2:
                             //无课
-                            //TODO:弹窗提示：是否加入课程？
 
-                            AlertDialog alertDialog = new AlertDialog.Builder(mContext)
+                            AlertDialog addDialog = new AlertDialog.Builder(mContext)
                                     .setTitle("提示")
                                     .setMessage("是否添加新的课程？")
                                     .setNegativeButton("否", new DialogInterface.OnClickListener() {
@@ -133,7 +197,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                                     })
                                     .setCancelable(true)
                                     .create();
-                            alertDialog.show();
+                            addDialog.show();
                             break;
                     }
                 }

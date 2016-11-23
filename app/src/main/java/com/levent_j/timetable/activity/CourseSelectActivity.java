@@ -1,7 +1,5 @@
 package com.levent_j.timetable.activity;
 
-import android.os.Handler;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,13 +9,7 @@ import com.levent_j.timetable.R;
 import com.levent_j.timetable.adapter.CourseListAdapter;
 import com.levent_j.timetable.base.BaseActivity;
 import com.levent_j.timetable.bean.Course;
-import com.levent_j.timetable.bean.ResultAddCourse;
 import com.levent_j.timetable.net.Api;
-import com.levent_j.timetable.utils.CourseEvent;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 

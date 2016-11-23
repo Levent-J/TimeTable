@@ -2,7 +2,6 @@ package com.levent_j.timetable.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,8 @@ import android.widget.TextView;
 import com.levent_j.timetable.R;
 import com.levent_j.timetable.activity.CourseSelectActivity;
 import com.levent_j.timetable.bean.Course;
-import com.levent_j.timetable.bean.ResultAddCourse;
+import com.levent_j.timetable.bean.CourseResult;
 import com.levent_j.timetable.net.Api;
-import com.levent_j.timetable.utils.CourseEvent;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,10 +69,10 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.mV
                 CourseSelectActivity.end)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ResultAddCourse>() {
+                .subscribe(new Action1<CourseResult>() {
                     @Override
-                    public void call(ResultAddCourse resultAddCourse) {
-                        if (resultAddCourse.status == "true") {
+                    public void call(CourseResult courseResult) {
+                        if (courseResult.status == "true") {
                             //添加成功
                         }
                     }
