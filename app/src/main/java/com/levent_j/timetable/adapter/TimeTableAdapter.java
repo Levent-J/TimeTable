@@ -216,7 +216,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                     //时间
                     textView.setText("第"+(position%7+(position<50?1:8))+"节课");
                     textView.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryText));
-                    backgorund.setBackground(mContext.getResources().getDrawable(R.color.colorSecondaryText));
+                    backgorund.setBackground(mContext.getResources().getDrawable(R.color.colorWhiteText));
                     break;
                 case 1:
                     //有课
@@ -230,8 +230,8 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                 case 2:
                     //无课
                     textView.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryText));
-                    backgorund.setBackground(mContext.getResources().getDrawable(R.color.colorSecondaryText));
-                    textView.setText("pos"+position);
+                    backgorund.setBackground(mContext.getResources().getDrawable(R.color.colorWhiteText));
+                    textView.setText(" ");
                     break;
             }
 
