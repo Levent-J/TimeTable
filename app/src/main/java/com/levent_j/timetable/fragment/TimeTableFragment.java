@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.levent_j.timetable.R;
+import com.levent_j.timetable.activity.LoginActivity;
 import com.levent_j.timetable.adapter.TimeTableAdapter;
 import com.levent_j.timetable.base.BaseFragment;
 import com.levent_j.timetable.bean.TableCourse;
@@ -59,7 +60,7 @@ public class TimeTableFragment extends BaseFragment implements SwipeRefreshLayou
 
     private void getTimeTable() {
         Api.getINSTANCE()
-                .getTimeTable("1")
+                .getTimeTable(LoginActivity.SID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<TableCourse>>() {

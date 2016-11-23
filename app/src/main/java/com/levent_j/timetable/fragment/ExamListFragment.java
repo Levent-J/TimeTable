@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.levent_j.timetable.R;
+import com.levent_j.timetable.activity.LoginActivity;
 import com.levent_j.timetable.adapter.ExamListAdapter;
 import com.levent_j.timetable.base.BaseFragment;
 import com.levent_j.timetable.bean.Course;
@@ -53,7 +54,7 @@ public class ExamListFragment extends BaseFragment{
     }
 
     private void getExamList() {
-        Api.getINSTANCE().getCourseList("1")
+        Api.getINSTANCE().getCourseList(LoginActivity.SID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<Course>>() {

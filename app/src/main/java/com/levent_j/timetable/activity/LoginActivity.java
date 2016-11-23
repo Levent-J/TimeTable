@@ -9,9 +9,15 @@ import android.widget.EditText;
 
 import com.levent_j.timetable.R;
 import com.levent_j.timetable.base.BaseActivity;
+import com.levent_j.timetable.bean.Login;
+import com.levent_j.timetable.net.Api;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by levent_j on 16-11-9.
@@ -28,18 +34,49 @@ public class LoginActivity extends BaseActivity{
     @Bind(R.id.et_password)
     EditText passwordText;
 
+    //TODO:最后要改为0的
+    public static String SID = "1";
+
     @Override
     protected void initialize() {
 
     }
 
     @OnClick(R.id.btn_login)
-    public void login(View view){
+    public void login(final View view){
         if (inputCorrect()){
-            //TODO:发起网络请求，检测账号密码是否正确
-            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-            //TODO:将学号传给MainActivity
-            startActivity(intent);
+            String username = usernameText.getText().toString().trim();
+            String password = passwordText.getText().toString().trim();
+
+            Api.getINSTANCE().login(username,password)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Login>() {
+                        @Override
+                        public void call(Login login) {
+                            if (login.status==0){
+                                //失败
+                                Snackbar.make(view,"账号或密码错误",Snackbar.LENGTH_SHORT).show();
+                                return;
+                            }else {
+                                //成功
+                                SID = String.valueOf(login.user.sid);
+                            }
+                        }
+                    }, new Action1<Throwable>() {
+                        @Override
+                        public void call(Throwable throwable) {
+                            throwable.printStackTrace();
+                        }
+                    }, new Action0() {
+                        @Override
+                        public void call() {
+                            if (!SID.equals("0")){
+                                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                    });
         }
     }
 

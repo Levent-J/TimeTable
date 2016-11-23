@@ -56,7 +56,7 @@ public class CourseSelectActivity extends BaseActivity{
 
 
     private void getCourseList() {
-        Api.getINSTANCE().getCourseList("1")
+        Api.getINSTANCE().getCourseList(LoginActivity.SID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<Course>>() {

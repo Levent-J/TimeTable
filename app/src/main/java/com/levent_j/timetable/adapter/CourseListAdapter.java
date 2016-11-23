@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.levent_j.timetable.R;
 import com.levent_j.timetable.activity.CourseSelectActivity;
+import com.levent_j.timetable.activity.LoginActivity;
 import com.levent_j.timetable.bean.Course;
 import com.levent_j.timetable.bean.CourseResult;
 import com.levent_j.timetable.net.Api;
@@ -62,7 +63,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.mV
     }
 
     public void addCourse(){
-        Api.getINSTANCE().addCourse("1",
+        Api.getINSTANCE().addCourse(LoginActivity.SID,
                 String.valueOf(cid),
                 CourseSelectActivity.data,
                 CourseSelectActivity.begin,

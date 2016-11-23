@@ -10,12 +10,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/colorPrimary">
+            <TextView
+                android:text="Login"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/colorWhiteText"
+                android:textSize="36sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
         <LinearLayout
+            android:background="@color/colorWhiteText"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

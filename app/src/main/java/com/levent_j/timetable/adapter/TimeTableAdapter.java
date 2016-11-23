@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.levent_j.timetable.R;
 import com.levent_j.timetable.activity.CourseSelectActivity;
+import com.levent_j.timetable.activity.LoginActivity;
 import com.levent_j.timetable.bean.CourseResult;
 import com.levent_j.timetable.bean.TableCourse;
 import com.levent_j.timetable.net.Api;
@@ -111,7 +112,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         Api.getINSTANCE().deleteCourse(
-                                                "1",
+                                                LoginActivity.SID,
                                                 String.valueOf(getLayoutPosition()%8),
                                                 String.valueOf(getLayoutPosition()/8+1),
                                                 String.valueOf(getLayoutPosition()/8+1))
