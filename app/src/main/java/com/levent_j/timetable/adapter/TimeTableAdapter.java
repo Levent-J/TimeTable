@@ -3,7 +3,6 @@ package com.levent_j.timetable.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,28 +11,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.levent_j.timetable.R;
-import com.levent_j.timetable.activity.CourseDetailActivity;
 import com.levent_j.timetable.activity.CourseSelectActivity;
-import com.levent_j.timetable.activity.MainActivity;
 import com.levent_j.timetable.bean.CourseResult;
 import com.levent_j.timetable.bean.TableCourse;
-import com.levent_j.timetable.fragment.TimeTableFragment;
 import com.levent_j.timetable.net.Api;
-import com.levent_j.timetable.utils.CourseEvent;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
@@ -131,7 +121,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                                                     @Override
                                                     public void call(CourseResult courseResult) {
                                                         if (courseResult!=null){
-                                                            if (courseResult.status=="true"){
+                                                            if (courseResult.status.equals("true")){
                                                                 //成功
                                                                 Log.d("DELETE","pos="+getLayoutPosition());
                                                                 mTableCourses.get(getLayoutPosition()-(getLayoutPosition()/8+1)).status=0;
@@ -168,9 +158,20 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                         case 1:
                             //有课
 
+                            int index = getLayoutPosition()/8+1;
+                            TableCourse tableCourse = mTableCourses.get(getLayoutPosition()-index);
 
-                            final Intent intentToDetail = new Intent(mContext, CourseDetailActivity.class);
-                            mContext.startActivity(intentToDetail);
+                            AlertDialog detailDialog =new AlertDialog.Builder(mContext)
+                                    .setTitle(tableCourse.cname)
+                                    .setMessage(tableCourse.teacher_name+"\n"+tableCourse.classroom)
+                                    .setPositiveButton("我知道了", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            dialogInterface.dismiss();
+                                        }
+                                    })
+                                    .create();
+                            detailDialog.show();
                             break;
                         case 2:
                             //无课

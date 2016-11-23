@@ -72,7 +72,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.mV
                 .subscribe(new Action1<CourseResult>() {
                     @Override
                     public void call(CourseResult courseResult) {
-                        if (courseResult.status == "true") {
+                        if (courseResult.status .equals("true")) {
                             //添加成功
                         }
                     }
