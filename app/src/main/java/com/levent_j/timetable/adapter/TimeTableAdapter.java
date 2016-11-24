@@ -3,6 +3,7 @@ package com.levent_j.timetable.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,12 +16,14 @@ import android.widget.TextView;
 import com.levent_j.timetable.R;
 import com.levent_j.timetable.activity.CourseSelectActivity;
 import com.levent_j.timetable.activity.LoginActivity;
+import com.levent_j.timetable.activity.MainActivity;
 import com.levent_j.timetable.bean.CourseResult;
 import com.levent_j.timetable.bean.TableCourse;
 import com.levent_j.timetable.net.Api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -135,6 +138,11 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                                                     @Override
                                                     public void call(Throwable throwable) {
                                                         throwable.printStackTrace();
+                                                        try {
+                                                            Snackbar.make(((MainActivity)mContext).getCurrentFocus(),"网络繁忙，请稍后重试",Snackbar.LENGTH_SHORT).show();
+                                                        }catch (Exception e){
+
+                                                        }
                                                     }
                                                 });
 
@@ -195,7 +203,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                                             intentToSelect.putExtra(CourseSelectActivity.KET_DATA,String.valueOf(getLayoutPosition()%8));
                                             intentToSelect.putExtra(CourseSelectActivity.KET_BEGIN,String.valueOf(getLayoutPosition()/8+1));
                                             intentToSelect.putExtra(CourseSelectActivity.KET_END,String.valueOf(getLayoutPosition()/8+1));
-                                            mContext.startActivity(intentToSelect);
+                                            ((MainActivity)mContext).startActivityForResult(intentToSelect,0);
                                         }
                                     })
                                     .setCancelable(true)

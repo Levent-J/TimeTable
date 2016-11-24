@@ -1,6 +1,7 @@
 package com.levent_j.timetable.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,6 +86,8 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.mV
                 }, new Action0() {
                     @Override
                     public void call() {
+                        Intent intent = new Intent();
+                        ((CourseSelectActivity)mContext).setResult(0,intent);
                         ((CourseSelectActivity)mContext).finish();
                     }
                 });

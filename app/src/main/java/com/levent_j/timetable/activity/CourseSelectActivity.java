@@ -86,12 +86,6 @@ public class CourseSelectActivity extends BaseActivity{
 
     }
 
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void reciveCourse(CourseEvent event){
-//        data = event.getData();
-//        begin = event.getBegin();
-//        end = event.getEnd();
-//    }
 
     @Override
     protected int setLayout() {

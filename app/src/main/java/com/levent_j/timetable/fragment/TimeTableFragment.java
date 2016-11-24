@@ -1,5 +1,6 @@
 package com.levent_j.timetable.fragment;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -58,7 +59,7 @@ public class TimeTableFragment extends BaseFragment implements SwipeRefreshLayou
 
     }
 
-    private void getTimeTable() {
+    public void getTimeTable() {
         Api.getINSTANCE()
                 .getTimeTable(LoginActivity.SID)
                 .subscribeOn(Schedulers.newThread())
@@ -108,4 +109,6 @@ public class TimeTableFragment extends BaseFragment implements SwipeRefreshLayou
     public void onRefresh() {
         getTimeTable();
     }
+
+
 }
