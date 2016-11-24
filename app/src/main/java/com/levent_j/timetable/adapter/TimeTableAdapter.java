@@ -37,9 +37,10 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
     private List<TableCourse> mTableCourses;
 
     private int[] colors = new int[]{
-            R.color.colorItemYellow,R.color.colorItemBlue,R.color.colorItemPink,
-            R.color.colorItemCyn,R.color.colorItemPurple,R.color.colorItemOrange,
-            R.color.colorItemLightGreen,R.color.colorItemRed,R.color.colorItemYellow,
+            R.color.colorItemYellow,R.color.colorItemBlue,R.color.colorItemLightGreen,
+            R.color.colorItemPink, R.color.colorItemCyn,R.color.colorItemOrange,
+            R.color.colorItemPurple,R.color.colorItemBlue,R.color.colorItemYellow,
+            R.color.colorItemGreen,R.color.colorItemRed,R.color.colorItemLightYellow,
             R.color.colorItemOrange,R.color.colorItemLightPurple,R.color.colorItemGreen};
 
     public TimeTableAdapter(Context context){
@@ -216,7 +217,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                     //时间
                     textView.setText("第"+(position%7+(position<50?1:8))+"节课");
                     textView.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryText));
-                    backgorund.setBackground(mContext.getResources().getDrawable(R.color.colorWhiteText));
+                    backgorund.setBackground(mContext.getResources().getDrawable(R.color.colorGrayBac));
                     break;
                 case 1:
                     //有课
@@ -230,7 +231,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.mVie
                 case 2:
                     //无课
                     textView.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryText));
-                    backgorund.setBackground(mContext.getResources().getDrawable(R.color.colorWhiteText));
+                    backgorund.setBackground(mContext.getResources().getDrawable(R.drawable.kb));
                     textView.setText(" ");
                     break;
             }

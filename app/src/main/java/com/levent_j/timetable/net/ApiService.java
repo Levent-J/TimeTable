@@ -15,7 +15,6 @@ import rx.Observable;
  * Created by levent_j on 16-11-9.
  */
 public interface ApiService {
-    //TODO:在此添加所有api
     //登陆接口
     //http://119.29.100.225:8080/timetable/check_user?name=wangdong&password=550965989
     @GET("check_user")

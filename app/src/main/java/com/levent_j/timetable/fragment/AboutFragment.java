@@ -20,7 +20,7 @@ public class AboutFragment extends BaseFragment {
     @Override
     protected void initialize() {
 
-        String author = "小组成员：李文靖\\王东\\陈文卓";
+        String author = "小组成员：\n李文靖 陈文卓(android客户端开发)\n王东(后端开发)\n";
         String qq = "联系QQ：609148550";
 
         String aboutText = author+"\n \n"+qq;

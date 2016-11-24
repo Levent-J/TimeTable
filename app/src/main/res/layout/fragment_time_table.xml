@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:text="节  "
+            android:text="  节  "
             android:layout_weight="1"
             android:gravity="center"
             android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
             android:id="@+id/recyclerView_time_table"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
+            android:scrollbars="none"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>

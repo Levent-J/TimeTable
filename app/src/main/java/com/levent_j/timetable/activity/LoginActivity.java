@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.levent_j.timetable.R;
@@ -34,8 +35,12 @@ public class LoginActivity extends BaseActivity{
     @Bind(R.id.et_password)
     EditText passwordText;
 
-    //TODO:最后要改为0的
+    @Bind(R.id.btn_login)
+    Button loginButton;
+
     public static String SID = "1";
+
+    private boolean isLogin = false;
 
     @Override
     protected void initialize() {
@@ -45,6 +50,10 @@ public class LoginActivity extends BaseActivity{
     @OnClick(R.id.btn_login)
     public void login(final View view){
         if (inputCorrect()){
+
+            loginButton.setText("登录中……");
+            loginButton.setEnabled(false);
+
             String username = usernameText.getText().toString().trim();
             String password = passwordText.getText().toString().trim();
 
@@ -54,26 +63,33 @@ public class LoginActivity extends BaseActivity{
                     .subscribe(new Action1<Login>() {
                         @Override
                         public void call(Login login) {
-                            if (login.status==0){
-                                //失败
-                                Snackbar.make(view,"账号或密码错误",Snackbar.LENGTH_SHORT).show();
-                                return;
-                            }else {
+                            if (login.status==1){
                                 //成功
                                 SID = String.valueOf(login.user.sid);
+                                isLogin = true;
                             }
                         }
                     }, new Action1<Throwable>() {
                         @Override
                         public void call(Throwable throwable) {
+                            Snackbar.make(view,"网络繁忙，请稍后重试",Snackbar.LENGTH_SHORT).show();
+                            loginButton.setEnabled(true);
+                            loginButton.setText("登陆");
                             throwable.printStackTrace();
                         }
                     }, new Action0() {
                         @Override
                         public void call() {
-                            if (!SID.equals("0")){
+
+                            loginButton.setEnabled(true);
+                            loginButton.setText("登陆");
+
+                            if (isLogin){
+                                isLogin=false;
                                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                                 startActivity(intent);
+                            }else {
+                                Snackbar.make(view,"账号或密码错误",Snackbar.LENGTH_SHORT).show();
                             }
                         }
                     });
